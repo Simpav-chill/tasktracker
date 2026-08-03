@@ -18,6 +18,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ProjectDto createProject(@RequestBody @Valid ProjectDto dto) {
         return projectService.createProject(dto);
     }
@@ -50,6 +51,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{projectId}/tasks")
+    @ResponseStatus(HttpStatus.CREATED)
     public TaskDto createTask(@PathVariable Long projectId,
                               @RequestBody @Valid TaskDto dto) {
         return projectService.createTask(projectId, dto);

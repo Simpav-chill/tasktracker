@@ -2,6 +2,7 @@ package com.example.tasktrackerrestart.service;
 
 import com.example.tasktrackerrestart.dto.TaskDto;
 import com.example.tasktrackerrestart.entity.Task;
+import com.example.tasktrackerrestart.exception.EntityNotFoundException;
 import com.example.tasktrackerrestart.mapper.TaskMapper;
 import com.example.tasktrackerrestart.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,12 @@ public class TaskService {
 
     public TaskDto getTaskById(Long id) {
         return taskMapper.toDto(taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found: " + id)));
+                .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found")));
     }
 
     public TaskDto updateTaskInfo(Long id, TaskDto dto) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found"));
 
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
@@ -34,7 +35,7 @@ public class TaskService {
 
     public TaskDto setTaskStatus(Long id, TaskDto dto) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found"));
 
         task.setStatus(dto.getStatus());
 
@@ -45,7 +46,7 @@ public class TaskService {
 
     public void deleteTaskById(Long id) {
         if (!taskRepository.existsById(id)) {
-            throw new RuntimeException("Task not found: " + id);
+            throw new EntityNotFoundException("Task " + id + " not found");
         }
 
         taskRepository.deleteById(id);

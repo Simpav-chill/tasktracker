@@ -1,0 +1,37 @@
+package com.example.tasktrackerrestart.controller;
+
+import com.example.tasktrackerrestart.dto.TaskDto;
+import com.example.tasktrackerrestart.service.TaskService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/tasks")
+@RequiredArgsConstructor
+public class TaskController {
+
+    private final TaskService taskService;
+
+    @GetMapping("/{id}")
+    public TaskDto getTaskById(@PathVariable Long id) {
+        return taskService.getTaskById(id);
+    }
+
+    @PutMapping("/{id}")
+    public TaskDto updateTaskInfo(@PathVariable Long id,
+                                  @RequestBody @Valid TaskDto dto) {
+        return taskService.updateTaskInfo(id, dto);
+    }
+
+    @PatchMapping("/{id}/status")
+    public TaskDto setTaskStatus(@PathVariable Long id,
+                                 @RequestBody @Valid TaskDto dto) {
+        return taskService.setTaskStatus(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTaskById(@PathVariable Long id) {
+        taskService.deleteTaskById(id);
+    }
+}

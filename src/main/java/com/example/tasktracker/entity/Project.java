@@ -1,4 +1,4 @@
-package com.example.tasktrackerrestart.entity;
+package com.example.tasktracker.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,9 +15,11 @@ import java.util.List;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "projects")
 public class Project {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -27,10 +29,10 @@ public class Project {
     private ProjectStatus status;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.example.tasktrackerrestart.exception;
+package com.example.tasktracker.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

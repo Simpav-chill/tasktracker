@@ -1,12 +1,13 @@
-package com.example.tasktrackerrestart.dto;
+package com.example.tasktracker.dto;
 
-import com.example.tasktrackerrestart.entity.ProjectStatus;
+import com.example.tasktracker.entity.ProjectStatus;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
+
     private Long id;
 
     private String title;

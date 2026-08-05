@@ -1,7 +1,7 @@
-package com.example.tasktrackerrestart.controller;
+package com.example.tasktracker.controller;
 
-import com.example.tasktrackerrestart.dto.TaskDto;
-import com.example.tasktrackerrestart.service.TaskService;
+import com.example.tasktracker.dto.TaskDto;
+import com.example.tasktracker.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

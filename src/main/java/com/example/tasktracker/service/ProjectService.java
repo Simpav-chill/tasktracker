@@ -1,16 +1,16 @@
-package com.example.tasktrackerrestart.service;
+package com.example.tasktracker.service;
 
-import com.example.tasktrackerrestart.dto.ProjectDto;
-import com.example.tasktrackerrestart.dto.TaskDto;
-import com.example.tasktrackerrestart.entity.Project;
-import com.example.tasktrackerrestart.entity.ProjectStatus;
-import com.example.tasktrackerrestart.entity.Task;
-import com.example.tasktrackerrestart.exception.EntityAlreadyExistsException;
-import com.example.tasktrackerrestart.exception.EntityNotFoundException;
-import com.example.tasktrackerrestart.mapper.ProjectMapper;
-import com.example.tasktrackerrestart.mapper.TaskMapper;
-import com.example.tasktrackerrestart.repository.ProjectRepository;
-import com.example.tasktrackerrestart.repository.TaskRepository;
+import com.example.tasktracker.dto.ProjectDto;
+import com.example.tasktracker.dto.TaskDto;
+import com.example.tasktracker.entity.Project;
+import com.example.tasktracker.entity.ProjectStatus;
+import com.example.tasktracker.entity.Task;
+import com.example.tasktracker.exception.EntityAlreadyExistsException;
+import com.example.tasktracker.exception.EntityNotFoundException;
+import com.example.tasktracker.mapper.ProjectMapper;
+import com.example.tasktracker.mapper.TaskMapper;
+import com.example.tasktracker.repository.ProjectRepository;
+import com.example.tasktracker.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

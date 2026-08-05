@@ -1,4 +1,4 @@
-package com.example.tasktrackerrestart.entity;
+package com.example.tasktracker.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "task")
 public class Task {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -30,10 +32,10 @@ public class Task {
     private Project project;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     public Task() {}
 

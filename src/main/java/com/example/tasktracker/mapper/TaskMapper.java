@@ -1,7 +1,7 @@
-package com.example.tasktrackerrestart.mapper;
+package com.example.tasktracker.mapper;
 
-import com.example.tasktrackerrestart.dto.TaskDto;
-import com.example.tasktrackerrestart.entity.Task;
+import com.example.tasktracker.dto.TaskDto;
+import com.example.tasktracker.entity.Task;
 import org.springframework.stereotype.Component;
 
 @Component

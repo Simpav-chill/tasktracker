@@ -1,6 +1,6 @@
-package com.example.tasktrackerrestart.repository;
+package com.example.tasktracker.repository;
 
-import com.example.tasktrackerrestart.entity.Task;
+import com.example.tasktracker.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

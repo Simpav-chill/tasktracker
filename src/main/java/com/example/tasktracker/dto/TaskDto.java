@@ -1,7 +1,7 @@
-package com.example.tasktrackerrestart.dto;
+package com.example.tasktracker.dto;
 
-import com.example.tasktrackerrestart.entity.TaskPriority;
-import com.example.tasktrackerrestart.entity.TaskStatus;
+import com.example.tasktracker.entity.TaskPriority;
+import com.example.tasktracker.entity.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

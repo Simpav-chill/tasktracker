@@ -39,17 +39,17 @@ public class Task {
 
     public Task() {}
 
-    Task(Long id, String title, String description, TaskPriority priority) {
+    public Task(String title, String description, TaskStatus status, TaskPriority priority) {
         this.title = title;
         this.description = description;
-        this.status = TaskStatus.TODO;
+        this.status = status;
         this.priority = priority;
     }
 
-    Task(Long id, String title, String description, TaskPriority priority, Project project) {
+    public Task(String title, String description, TaskStatus status, TaskPriority priority, Project project) {
         this.title = title;
         this.description = description;
-        this.status = TaskStatus.TODO;
+        this.status = status;
         this.priority = priority;
         this.project = project;
     }

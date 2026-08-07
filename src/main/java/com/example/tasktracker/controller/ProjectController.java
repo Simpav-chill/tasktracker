@@ -1,7 +1,6 @@
 package com.example.tasktracker.controller;
 
-import com.example.tasktracker.dto.ProjectDto;
-import com.example.tasktracker.dto.TaskDto;
+import com.example.tasktracker.dto.*;
 import com.example.tasktracker.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class ProjectController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProjectDto createProject(@RequestBody @Valid ProjectDto dto) {
+    public ProjectDto createProject(@RequestBody @Valid CreateProjectDto dto) {
         return projectService.createProject(dto);
     }
 
@@ -35,7 +34,7 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     public ProjectDto updateProjectInfo(@PathVariable Long id,
-                                 @RequestBody @Valid ProjectDto updateDto) {
+                                 @RequestBody @Valid UpdateProjectDto updateDto) {
         return projectService.updateProjectInfo(id, updateDto);
     }
 
@@ -53,7 +52,7 @@ public class ProjectController {
     @PostMapping("/{projectId}/tasks")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDto createTask(@PathVariable Long projectId,
-                              @RequestBody @Valid TaskDto dto) {
+                              @RequestBody @Valid CreateTaskDto dto) {
         return projectService.createTask(projectId, dto);
     }
 

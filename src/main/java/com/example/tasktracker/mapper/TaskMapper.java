@@ -1,5 +1,6 @@
 package com.example.tasktracker.mapper;
 
+import com.example.tasktracker.dto.CreateTaskDto;
 import com.example.tasktracker.dto.TaskDto;
 import com.example.tasktracker.entity.Task;
 import org.springframework.stereotype.Component;
@@ -23,14 +24,13 @@ public class TaskMapper {
         return dto;
     }
 
-    public Task toEntity(TaskDto dto) {
+    public Task toEntity(CreateTaskDto dto) {
         if (dto == null) {
             return null;
         }
 
         Task task = new Task();
 
-        task.setId(dto.getId());
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
         task.setStatus(dto.getStatus());

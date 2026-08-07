@@ -39,16 +39,16 @@ public class Project {
 
     public Project() {}
 
-    public Project(String title, String description) {
+    public Project(String title, String description, ProjectStatus status) {
         this.title = title;
         this.description = description;
-        this.status = ProjectStatus.ACTIVE;
+        this.status = status;
     }
 
-    public Project(String title, String description, List<Task> tasks) {
+    public Project(String title, String description, ProjectStatus status, List<Task> tasks) {
         this.title = title;
         this.description = description;
-        this.status = ProjectStatus.ACTIVE;
+        this.status = status;
         this.tasks = tasks != null ? tasks : new ArrayList<>();
     }
 

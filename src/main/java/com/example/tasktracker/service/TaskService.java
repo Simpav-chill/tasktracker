@@ -1,6 +1,8 @@
 package com.example.tasktracker.service;
 
 import com.example.tasktracker.dto.TaskDto;
+import com.example.tasktracker.dto.UpdateTaskDto;
+import com.example.tasktracker.dto.UpdateTaskStatusDto;
 import com.example.tasktracker.entity.Task;
 import com.example.tasktracker.exception.EntityNotFoundException;
 import com.example.tasktracker.mapper.TaskMapper;
@@ -20,7 +22,7 @@ public class TaskService {
                 .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found")));
     }
 
-    public TaskDto updateTaskInfo(Long id, TaskDto dto) {
+    public TaskDto updateTaskInfo(Long id, UpdateTaskDto dto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found"));
 
@@ -33,7 +35,7 @@ public class TaskService {
         return taskMapper.toDto(task);
     }
 
-    public TaskDto setTaskStatus(Long id, TaskDto dto) {
+    public TaskDto setTaskStatus(Long id, UpdateTaskStatusDto dto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found"));
 

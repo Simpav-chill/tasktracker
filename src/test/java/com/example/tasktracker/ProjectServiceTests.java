@@ -236,7 +236,10 @@ class ProjectServiceTests {
 
     @Test
     void updateProjectInfoTest() {
-        UpdateProjectDto updateDto = new UpdateProjectDto("work", "work tasks");
+        UpdateProjectDto updateDto = new UpdateProjectDto(
+                "work",
+                "work tasks"
+        );
 
         Project found = new Project(
                 "home",
@@ -290,6 +293,7 @@ class ProjectServiceTests {
 
         projectService.deleteProjectById(1L);
 
+        verify(projectRepository,times(1)).existsById(1L);
         verify(projectRepository, times(1)).deleteById(1L);
     }
 

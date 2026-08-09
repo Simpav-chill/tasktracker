@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://tasktracker_db:5432/tasktracker
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    com.example.tasktracker: DEBUG

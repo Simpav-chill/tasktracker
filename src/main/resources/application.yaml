@@ -1,11 +1,16 @@
 spring:
   application:
     name: tasktracker
+
   jpa:
     hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    url: jdbc:postgresql://localhost:5432/tasktracker
-    username: admin
-    password: admin
+      ddl-auto: validate
+    open-in-view: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+logging:
+  level:
+    root: INFO
+    com.example.users: INFO

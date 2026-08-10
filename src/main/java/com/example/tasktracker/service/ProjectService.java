@@ -10,6 +10,7 @@ import com.example.tasktracker.mapper.ProjectMapper;
 import com.example.tasktracker.mapper.TaskMapper;
 import com.example.tasktracker.repository.ProjectRepository;
 import com.example.tasktracker.repository.TaskRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +78,7 @@ public class ProjectService {
         return projectMapper.toDto(project);
     }
 
+    @Transactional
     public TaskDto createTask(Long projectId, CreateTaskDto dto) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new EntityNotFoundException("Project with id " + projectId + " not found"));

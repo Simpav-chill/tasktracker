@@ -1,4 +1,4 @@
-package com.example.tasktracker;
+package com.example.tasktracker.unit;
 
 import com.example.tasktracker.dto.TaskDto;
 import com.example.tasktracker.dto.UpdateTaskDto;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TaskServiceTests {
+class TaskServiceUnitTest {
 
     @Mock
     private TaskRepository taskRepository;

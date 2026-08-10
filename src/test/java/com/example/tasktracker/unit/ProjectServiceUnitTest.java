@@ -1,4 +1,4 @@
-package com.example.tasktracker;
+package com.example.tasktracker.unit;
 
 import com.example.tasktracker.dto.*;
 import com.example.tasktracker.entity.*;
@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ProjectServiceTests {
+class ProjectServiceUnitTest {
 
     @Mock
     private ProjectRepository projectRepository;

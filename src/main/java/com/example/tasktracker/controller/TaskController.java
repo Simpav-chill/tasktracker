@@ -6,6 +6,7 @@ import com.example.tasktracker.dto.UpdateTaskStatusDto;
 import com.example.tasktracker.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,6 +34,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTaskById(@PathVariable Long id) {
         taskService.deleteTaskById(id);
     }

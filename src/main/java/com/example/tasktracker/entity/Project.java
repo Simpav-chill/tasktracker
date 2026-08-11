@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "projects")
 public class Project {
 
     @Id

@@ -102,7 +102,7 @@ cd youpathtotheproject
 docker-compose -f compose.full.yaml up -d
 ```
 # API Documentation
-Run the app locally and then visit:
+Launch the app and then visit:
 ```
 http://localhost:8080/swagger-ui/index.html
 ```

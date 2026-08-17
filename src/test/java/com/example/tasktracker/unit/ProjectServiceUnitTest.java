@@ -43,7 +43,7 @@ class ProjectServiceUnitTest {
 
     @Test
     void createProjectTest() {
-        CreateProjectDto dto = new CreateProjectDto(
+        CreateProjectRequest dto = new CreateProjectRequest(
                 "home",
                 "home tasks",
                 ProjectStatus.ACTIVE);
@@ -65,7 +65,7 @@ class ProjectServiceUnitTest {
         when(projectRepository.existsProjectByTitle("home")).thenReturn(false);
         when(projectRepository.save(any(Project.class))).thenReturn(saved);
 
-        ProjectDto returnResult = new ProjectDto(
+        ProjectResponse returnResult = new ProjectResponse(
                 1L,
                 "home",
                 "home tasks",
@@ -73,17 +73,17 @@ class ProjectServiceUnitTest {
 
         when(projectMapper.toDto(saved)).thenReturn(returnResult);
 
-        ProjectDto result = projectService.createProject(dto);
+        ProjectResponse result = projectService.createProject(dto);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("home", result.getTitle());
+        assertEquals(1L, result.id());
+        assertEquals("home", result.title());
         verify(projectRepository, times(1)).save(any(Project.class));
     }
 
     @Test
     void createProjectExceptionTest() {
-        CreateProjectDto dto = new CreateProjectDto("home",
+        CreateProjectRequest dto = new CreateProjectRequest("home",
                 "home tasks",
                 ProjectStatus.ACTIVE);
 
@@ -92,7 +92,7 @@ class ProjectServiceUnitTest {
         Exception exception = assertThrows(EntityAlreadyExistsException.class,
                 () -> projectService.createProject(dto));
 
-        assertEquals("Project with title '" + dto.getTitle() + "' already exists",
+        assertEquals("Project with title '" + dto.title() + "' already exists",
                 exception.getMessage());
     }
 
@@ -131,19 +131,19 @@ class ProjectServiceUnitTest {
         when(projectRepository.findAll())
                 .thenReturn(List.of(firstProject, secondProject, thirdProject));
 
-        ProjectDto firstDto = new ProjectDto(
+        ProjectResponse firstDto = new ProjectResponse(
                 1L,
                 "home",
                 "home tasks",
                 ProjectStatus.ACTIVE
         );
-        ProjectDto secondDto = new ProjectDto(
+        ProjectResponse secondDto = new ProjectResponse(
                 2L,
                 "work",
                 "work tasks",
                 ProjectStatus.ACTIVE
         );
-        ProjectDto thirdDto = new ProjectDto(
+        ProjectResponse thirdDto = new ProjectResponse(
                 3L,
                 "gym",
                 "exercises",
@@ -157,22 +157,22 @@ class ProjectServiceUnitTest {
         when(projectMapper.toDto(thirdProject))
                 .thenReturn(thirdDto);
 
-        List<ProjectDto> result = projectService.getAllProjects();
+        List<ProjectResponse> result = projectService.getAllProjects();
 
         assertNotNull(result);
         assertEquals(3, result.size());
 
-        assertEquals("home", result.get(0).getTitle());
-        assertEquals("home tasks", result.get(0).getDescription());
-        assertEquals(ProjectStatus.ACTIVE, result.get(0).getStatus());
+        assertEquals("home", result.get(0).title());
+        assertEquals("home tasks", result.get(0).description());
+        assertEquals(ProjectStatus.ACTIVE, result.get(0).status());
 
-        assertEquals("work", result.get(1).getTitle());
-        assertEquals("work tasks", result.get(1).getDescription());
-        assertEquals(ProjectStatus.ACTIVE, result.get(1).getStatus());
+        assertEquals("work", result.get(1).title());
+        assertEquals("work tasks", result.get(1).description());
+        assertEquals(ProjectStatus.ACTIVE, result.get(1).status());
 
-        assertEquals("gym", result.get(2).getTitle());
-        assertEquals("exercises", result.get(2).getDescription());
-        assertEquals(ProjectStatus.ARCHIVE, result.get(2).getStatus());
+        assertEquals("gym", result.get(2).title());
+        assertEquals("exercises", result.get(2).description());
+        assertEquals(ProjectStatus.ARCHIVE, result.get(2).status());
 
         verify(projectMapper, times(1)).toDto(firstProject);
         verify(projectMapper, times(1)).toDto(secondProject);
@@ -183,7 +183,7 @@ class ProjectServiceUnitTest {
     void getAllProjectsDontExistTest() {
         when(projectRepository.findAll()).thenReturn(List.of());
 
-        List<ProjectDto> result = projectService.getAllProjects();
+        List<ProjectResponse> result = projectService.getAllProjects();
 
         assertNotNull(result);
         assertEquals(List.of(), result);
@@ -204,7 +204,7 @@ class ProjectServiceUnitTest {
 
         when(projectRepository.findById(id)).thenReturn(Optional.of(found));
 
-        ProjectDto mapped = new ProjectDto(
+        ProjectResponse mapped = new ProjectResponse(
                 id,
                 "home",
                 "home tasks",
@@ -213,13 +213,13 @@ class ProjectServiceUnitTest {
 
         when(projectMapper.toDto(found)).thenReturn(mapped);
 
-        ProjectDto result = projectService.getProjectById(id);
+        ProjectResponse result = projectService.getProjectById(id);
 
         assertNotNull(result);
-        assertEquals(id, result.getId());
-        assertEquals("home", result.getTitle());
-        assertEquals("home tasks", result.getDescription());
-        assertEquals(ProjectStatus.ACTIVE, result.getStatus());
+        assertEquals(id, result.id());
+        assertEquals("home", result.title());
+        assertEquals("home tasks", result.description());
+        assertEquals(ProjectStatus.ACTIVE, result.status());
 
         verify(projectMapper, times(1)).toDto(found);
     }
@@ -236,7 +236,7 @@ class ProjectServiceUnitTest {
 
     @Test
     void updateProjectInfoTest() {
-        UpdateProjectDto updateDto = new UpdateProjectDto(
+        UpdateProjectRequest updateDto = new UpdateProjectRequest(
                 "work",
                 "work tasks"
         );
@@ -250,12 +250,12 @@ class ProjectServiceUnitTest {
 
         when(projectRepository.findById(1L)).thenReturn(Optional.of(found));
 
-        found.setTitle(updateDto.getTitle());
-        found.setDescription(updateDto.getDescription());
+        found.setTitle(updateDto.title());
+        found.setDescription(updateDto.description());
 
         when(projectRepository.save(any(Project.class))).thenReturn(found);
 
-        ProjectDto mapped = new ProjectDto(
+        ProjectResponse mapped = new ProjectResponse(
                 1L,
                 "work",
                 "work tasks",
@@ -264,12 +264,12 @@ class ProjectServiceUnitTest {
 
         when(projectMapper.toDto(found)).thenReturn(mapped);
 
-        ProjectDto result = projectService.updateProjectInfo(1L, updateDto);
+        ProjectResponse result = projectService.updateProjectInfo(1L, updateDto);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("work", result.getTitle());
-        assertEquals("work tasks", result.getDescription());
+        assertEquals(1L, result.id());
+        assertEquals("work", result.title());
+        assertEquals("work tasks", result.description());
 
         verify(projectRepository).save(found);
         verify(projectMapper, times(1)).toDto(found);
@@ -279,7 +279,7 @@ class ProjectServiceUnitTest {
     void updateProjectInfoExceptionTest() {
         when(projectRepository.findById(1L)).thenReturn(Optional.empty());
 
-        UpdateProjectDto updateDto = new UpdateProjectDto("work", "work tasks");
+        UpdateProjectRequest updateDto = new UpdateProjectRequest("work", "work tasks");
 
         Exception exception = assertThrows(EntityNotFoundException.class,
                 () -> projectService.updateProjectInfo(1L, updateDto));
@@ -322,7 +322,7 @@ class ProjectServiceUnitTest {
 
         when(projectRepository.save(any(Project.class))).thenReturn(found);
 
-        ProjectDto mapped = new ProjectDto(
+        ProjectResponse mapped = new ProjectResponse(
                 1L,
                 "home",
                 "home tasks",
@@ -331,13 +331,13 @@ class ProjectServiceUnitTest {
 
         when(projectMapper.toDto(found)).thenReturn(mapped);
 
-        ProjectDto result = projectService.archiveProjectById(1L);
+        ProjectResponse result = projectService.archiveProjectById(1L);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("home", result.getTitle());
-        assertEquals("home tasks", result.getDescription());
-        assertEquals(ProjectStatus.ARCHIVE, result.getStatus());
+        assertEquals(1L, result.id());
+        assertEquals("home", result.title());
+        assertEquals("home tasks", result.description());
+        assertEquals(ProjectStatus.ARCHIVE, result.status());
 
         verify(projectRepository, times(1)).save(any(Project.class));
         verify(projectMapper, times(1)).toDto(found);
@@ -366,7 +366,7 @@ class ProjectServiceUnitTest {
 
         when(projectRepository.findById(projectId)).thenReturn(Optional.of(found));
 
-        CreateTaskDto dto = new CreateTaskDto(
+        CreateTaskRequest dto = new CreateTaskRequest(
                 "clean the room",
                 "vacuum clean and wash the floor",
                 TaskStatus.TODO,
@@ -395,7 +395,7 @@ class ProjectServiceUnitTest {
 
         when(taskRepository.save(task)).thenReturn(saved);
 
-        TaskDto mapped = new TaskDto(
+        TaskResponse mapped = new TaskResponse(
                 1L,
                 "clean the room",
                 "vacuum clean and wash the floor",
@@ -405,14 +405,14 @@ class ProjectServiceUnitTest {
 
         when(taskMapper.toDto(saved)).thenReturn(mapped);
 
-        TaskDto result = projectService.createTask(projectId, dto);
+        TaskResponse result = projectService.createTask(projectId, dto);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("clean the room", result.getTitle());
-        assertEquals("vacuum clean and wash the floor", result.getDescription());
-        assertEquals(TaskStatus.TODO, result.getStatus());
-        assertEquals(TaskPriority.MEDIUM, result.getPriority());
+        assertEquals(1L, result.id());
+        assertEquals("clean the room", result.title());
+        assertEquals("vacuum clean and wash the floor", result.description());
+        assertEquals(TaskStatus.TODO, result.status());
+        assertEquals(TaskPriority.MEDIUM, result.priority());
 
         verify(taskMapper, times(1)).toEntity(dto);
         verify(taskRepository, times(1)).save(task);
@@ -423,7 +423,7 @@ class ProjectServiceUnitTest {
     void createTaskExceptionTest() {
         when(projectRepository.findById(1L)).thenReturn(Optional.empty());
 
-        CreateTaskDto dto = new CreateTaskDto(
+        CreateTaskRequest dto = new CreateTaskRequest(
                 "clean the room",
                 "vacuum clean and wash the floor",
                 TaskStatus.TODO,
@@ -469,21 +469,21 @@ class ProjectServiceUnitTest {
         when(taskRepository.findAllByProjectId(1L))
                 .thenReturn(List.of(firstTask, secondTask, thirdTask));
 
-        TaskDto firstDto = new TaskDto(
+        TaskResponse firstDto = new TaskResponse(
                 1L,
                 "clean desk",
                 "",
                 TaskStatus.TODO,
                 TaskPriority.MEDIUM
         );
-        TaskDto secondDto = new TaskDto(
+        TaskResponse secondDto = new TaskResponse(
                 2L,
                 "meeting",
                 "at 4 pm",
                 TaskStatus.TODO,
                 TaskPriority.HIGH
         );
-        TaskDto thirdDto = new TaskDto(
+        TaskResponse thirdDto = new TaskResponse(
                 3L,
                 "water plants",
                 "grab watering can",
@@ -495,28 +495,28 @@ class ProjectServiceUnitTest {
         when(taskMapper.toDto(secondTask)).thenReturn(secondDto);
         when(taskMapper.toDto(thirdTask)).thenReturn(thirdDto);
 
-        List<TaskDto> result = projectService.getTasksByProjectId(1L);
+        List<TaskResponse> result = projectService.getTasksByProjectId(1L);
 
         assertNotNull(result);
         assertEquals(3, result.size());
 
-        assertEquals(1L, result.get(0).getId());
-        assertEquals("clean desk", result.get(0).getTitle());
-        assertEquals("", result.get(0).getDescription());
-        assertEquals(TaskStatus.TODO, result.get(0).getStatus());
-        assertEquals(TaskPriority.MEDIUM, result.get(0).getPriority());
+        assertEquals(1L, result.get(0).id());
+        assertEquals("clean desk", result.get(0).title());
+        assertEquals("", result.get(0).description());
+        assertEquals(TaskStatus.TODO, result.get(0).status());
+        assertEquals(TaskPriority.MEDIUM, result.get(0).priority());
 
-        assertEquals(2L, result.get(1).getId());
-        assertEquals("meeting", result.get(1).getTitle());
-        assertEquals("at 4 pm", result.get(1).getDescription());
-        assertEquals(TaskStatus.TODO, result.get(1).getStatus());
-        assertEquals(TaskPriority.HIGH, result.get(1).getPriority());
+        assertEquals(2L, result.get(1).id());
+        assertEquals("meeting", result.get(1).title());
+        assertEquals("at 4 pm", result.get(1).description());
+        assertEquals(TaskStatus.TODO, result.get(1).status());
+        assertEquals(TaskPriority.HIGH, result.get(1).priority());
 
-        assertEquals(3L, result.get(2).getId());
-        assertEquals("water plants", result.get(2).getTitle());
-        assertEquals("grab watering can", result.get(2).getDescription());
-        assertEquals(TaskStatus.TODO, result.get(2).getStatus());
-        assertEquals(TaskPriority.MEDIUM, result.get(2).getPriority());
+        assertEquals(3L, result.get(2).id());
+        assertEquals("water plants", result.get(2).title());
+        assertEquals("grab watering can", result.get(2).description());
+        assertEquals(TaskStatus.TODO, result.get(2).status());
+        assertEquals(TaskPriority.MEDIUM, result.get(2).priority());
 
         verify(taskMapper, times(1)).toDto(firstTask);
         verify(taskMapper, times(1)).toDto(secondTask);
@@ -527,7 +527,7 @@ class ProjectServiceUnitTest {
     void getTasksByProjectIdDontExistTest() {
         when(taskRepository.findAllByProjectId(1L)).thenReturn(List.of());
 
-        List<TaskDto> result = projectService.getTasksByProjectId(1L);
+        List<TaskResponse> result = projectService.getTasksByProjectId(1L);
 
         assertNotNull(result);
         assertEquals(List.of(), result);

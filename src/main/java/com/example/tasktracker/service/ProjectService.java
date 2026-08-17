@@ -25,9 +25,9 @@ public class ProjectService {
     private final TaskMapper taskMapper;
     private final TaskRepository taskRepository;
 
-    public ProjectDto createProject(CreateProjectDto dto) {
-        if (projectRepository.existsProjectByTitle(dto.getTitle())) {
-            throw new EntityAlreadyExistsException("Project with title '" + dto.getTitle() + "' already exists");
+    public ProjectResponse createProject(CreateProjectRequest dto) {
+        if (projectRepository.existsProjectByTitle(dto.title())) {
+            throw new EntityAlreadyExistsException("Project with title '" + dto.title() + "' already exists");
         }
 
         Project saved = projectRepository.save(projectMapper.toEntity(dto));
@@ -35,24 +35,24 @@ public class ProjectService {
         return projectMapper.toDto(saved);
     }
 
-    public List<ProjectDto> getAllProjects() {
+    public List<ProjectResponse> getAllProjects() {
         return projectRepository.findAll()
                 .stream()
                 .map(projectMapper::toDto)
                 .toList();
     }
 
-    public ProjectDto getProjectById(Long id) {
+    public ProjectResponse getProjectById(Long id) {
         return projectMapper.toDto(projectRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project with id " + id + " not found")));
     }
 
-    public ProjectDto updateProjectInfo(Long id, UpdateProjectDto updateDto) {
+    public ProjectResponse updateProjectInfo(Long id, UpdateProjectRequest updateDto) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project with id " + id + " not found"));
 
-        project.setTitle(updateDto.getTitle());
-        project.setDescription(updateDto.getDescription());
+        project.setTitle(updateDto.title());
+        project.setDescription(updateDto.description());
 
         projectRepository.save(project);
 
@@ -67,7 +67,7 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public ProjectDto archiveProjectById(Long id) {
+    public ProjectResponse archiveProjectById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Project with id " + id + " not found"));
 
@@ -79,7 +79,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public TaskDto createTask(Long projectId, CreateTaskDto dto) {
+    public TaskResponse createTask(Long projectId, CreateTaskRequest dto) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new EntityNotFoundException("Project with id " + projectId + " not found"));
 
@@ -92,7 +92,7 @@ public class ProjectService {
         return taskMapper.toDto(saved);
     }
 
-    public List<TaskDto> getTasksByProjectId(Long projectId) {
+    public List<TaskResponse> getTasksByProjectId(Long projectId) {
         return taskRepository.findAllByProjectId(projectId)
                 .stream()
                 .map(taskMapper::toDto)

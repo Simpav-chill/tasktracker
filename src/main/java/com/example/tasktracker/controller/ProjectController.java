@@ -18,23 +18,23 @@ public class ProjectController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProjectDto createProject(@RequestBody @Valid CreateProjectDto dto) {
+    public ProjectResponse createProject(@RequestBody @Valid CreateProjectRequest dto) {
         return projectService.createProject(dto);
     }
 
     @GetMapping
-    public List<ProjectDto> getAllProjects() {
+    public List<ProjectResponse> getAllProjects() {
         return projectService.getAllProjects();
     }
 
     @GetMapping("/{id}")
-    public ProjectDto getProjectById(@PathVariable Long id) {
+    public ProjectResponse getProjectById(@PathVariable Long id) {
         return projectService.getProjectById(id);
     }
 
     @PutMapping("/{id}")
-    public ProjectDto updateProjectInfo(@PathVariable Long id,
-                                 @RequestBody @Valid UpdateProjectDto updateDto) {
+    public ProjectResponse updateProjectInfo(@PathVariable Long id,
+                                             @RequestBody @Valid UpdateProjectRequest updateDto) {
         return projectService.updateProjectInfo(id, updateDto);
     }
 
@@ -45,19 +45,19 @@ public class ProjectController {
     }
 
     @PatchMapping("/{id}/archive")
-    public ProjectDto archiveProjectById(@PathVariable Long id) {
+    public ProjectResponse archiveProjectById(@PathVariable Long id) {
         return projectService.archiveProjectById(id);
     }
 
     @PostMapping("/{projectId}/tasks")
     @ResponseStatus(HttpStatus.CREATED)
-    public TaskDto createTask(@PathVariable Long projectId,
-                              @RequestBody @Valid CreateTaskDto dto) {
+    public TaskResponse createTask(@PathVariable Long projectId,
+                                   @RequestBody @Valid CreateTaskRequest dto) {
         return projectService.createTask(projectId, dto);
     }
 
     @GetMapping("/{projectId}/tasks")
-    public List<TaskDto> getTasksByProjectId(@PathVariable Long projectId) {
+    public List<TaskResponse> getTasksByProjectId(@PathVariable Long projectId) {
         return projectService.getTasksByProjectId(projectId);
     }
 }

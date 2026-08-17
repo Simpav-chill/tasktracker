@@ -1,8 +1,8 @@
 package com.example.tasktracker.unit;
 
-import com.example.tasktracker.dto.TaskDto;
-import com.example.tasktracker.dto.UpdateTaskDto;
-import com.example.tasktracker.dto.UpdateTaskStatusDto;
+import com.example.tasktracker.dto.TaskResponse;
+import com.example.tasktracker.dto.UpdateTaskRequest;
+import com.example.tasktracker.dto.UpdateTaskStatusRequest;
 import com.example.tasktracker.entity.Task;
 import com.example.tasktracker.entity.TaskPriority;
 import com.example.tasktracker.entity.TaskStatus;
@@ -48,7 +48,7 @@ class TaskServiceUnitTest {
 
         when(taskRepository.findById(1L)).thenReturn(Optional.of(found));
 
-        TaskDto mapped = new TaskDto(
+        TaskResponse mapped = new TaskResponse(
                 1L,
                 "buy groceries",
                 "buy cheese, milk and bread",
@@ -58,14 +58,14 @@ class TaskServiceUnitTest {
 
         when(taskMapper.toDto(found)).thenReturn(mapped);
 
-        TaskDto result = taskService.getTaskById(1L);
+        TaskResponse result = taskService.getTaskById(1L);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("buy groceries", result.getTitle());
-        assertEquals("buy cheese, milk and bread", result.getDescription());
-        assertEquals(TaskStatus.TODO, result.getStatus());
-        assertEquals(TaskPriority.MEDIUM, result.getPriority());
+        assertEquals(1L, result.id());
+        assertEquals("buy groceries", result.title());
+        assertEquals("buy cheese, milk and bread", result.description());
+        assertEquals(TaskStatus.TODO, result.status());
+        assertEquals(TaskPriority.MEDIUM, result.priority());
 
         verify(taskRepository, times(1)).findById(1L);
         verify(taskMapper, times(1)).toDto(found);
@@ -83,7 +83,7 @@ class TaskServiceUnitTest {
 
     @Test
     void updateTaskInfoTest() {
-        UpdateTaskDto updateDto = new UpdateTaskDto(
+        UpdateTaskRequest updateDto = new UpdateTaskRequest(
                 "buy groceries",
                 "buy only milk and bread, i've found cheese",
                 TaskPriority.MEDIUM
@@ -101,13 +101,13 @@ class TaskServiceUnitTest {
 
         when(taskRepository.findById(1L)).thenReturn(Optional.of(found));
 
-        found.setTitle(updateDto.getTitle());
-        found.setDescription(updateDto.getDescription());
-        found.setPriority(updateDto.getPriority());
+        found.setTitle(updateDto.title());
+        found.setDescription(updateDto.description());
+        found.setPriority(updateDto.priority());
 
         when(taskRepository.save(any(Task.class))).thenReturn(found);
 
-        TaskDto mapped = new TaskDto(
+        TaskResponse mapped = new TaskResponse(
                 1L,
                 "buy groceries",
                 "buy only milk and bread, i've found cheese",
@@ -117,14 +117,14 @@ class TaskServiceUnitTest {
 
         when(taskMapper.toDto(found)).thenReturn(mapped);
 
-        TaskDto result = taskService.updateTaskInfo(1L, updateDto);
+        TaskResponse result = taskService.updateTaskInfo(1L, updateDto);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("buy groceries", result.getTitle());
-        assertEquals("buy only milk and bread, i've found cheese", result.getDescription());
-        assertEquals(TaskStatus.TODO, result.getStatus());
-        assertEquals(TaskPriority.MEDIUM, result.getPriority());
+        assertEquals(1L, result.id());
+        assertEquals("buy groceries", result.title());
+        assertEquals("buy only milk and bread, i've found cheese", result.description());
+        assertEquals(TaskStatus.TODO, result.status());
+        assertEquals(TaskPriority.MEDIUM, result.priority());
 
         verify(taskRepository, times(1)).save(found);
         verify(taskMapper, times(1)).toDto(found);
@@ -134,7 +134,7 @@ class TaskServiceUnitTest {
     void updateTaskInfoExceptionTest() {
         when(taskRepository.findById(1L)).thenReturn(Optional.empty());
 
-        UpdateTaskDto updateDto = new UpdateTaskDto(
+        UpdateTaskRequest updateDto = new UpdateTaskRequest(
                 "buy groceries",
                 "buy only milk and bread, i've found cheese",
                 TaskPriority.MEDIUM
@@ -148,7 +148,7 @@ class TaskServiceUnitTest {
 
     @Test
     void setTaskStatusTest() {
-        UpdateTaskStatusDto dto = new UpdateTaskStatusDto(TaskStatus.DONE);
+        UpdateTaskStatusRequest dto = new UpdateTaskStatusRequest(TaskStatus.DONE);
 
         Task found = new Task(
                 "buy groceries",
@@ -162,11 +162,11 @@ class TaskServiceUnitTest {
 
         when(taskRepository.findById(1L)).thenReturn(Optional.of(found));
 
-        found.setStatus(dto.getStatus());
+        found.setStatus(dto.status());
 
         when(taskRepository.save(any(Task.class))).thenReturn(found);
 
-        TaskDto mapped = new TaskDto(
+        TaskResponse mapped = new TaskResponse(
                 1L,
                 "buy groceries",
                 "buy cheese, milk and bread",
@@ -176,14 +176,14 @@ class TaskServiceUnitTest {
 
         when(taskMapper.toDto(found)).thenReturn(mapped);
 
-        TaskDto result = taskService.setTaskStatus(1L, dto);
+        TaskResponse result = taskService.setTaskStatus(1L, dto);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("buy groceries", result.getTitle());
-        assertEquals("buy cheese, milk and bread", result.getDescription());
-        assertEquals(TaskStatus.DONE, result.getStatus());
-        assertEquals(TaskPriority.MEDIUM, result.getPriority());
+        assertEquals(1L, result.id());
+        assertEquals("buy groceries", result.title());
+        assertEquals("buy cheese, milk and bread", result.description());
+        assertEquals(TaskStatus.DONE, result.status());
+        assertEquals(TaskPriority.MEDIUM, result.priority());
 
         verify(taskRepository, times(1)).save(found);
         verify(taskMapper, times(1)).toDto(found);
@@ -193,7 +193,7 @@ class TaskServiceUnitTest {
     void setTaskStatusExceptionTest() {
         when(taskRepository.findById(1L)).thenReturn(Optional.empty());
 
-        UpdateTaskStatusDto dto = new UpdateTaskStatusDto(TaskStatus.DONE);
+        UpdateTaskStatusRequest dto = new UpdateTaskStatusRequest(TaskStatus.DONE);
 
         Exception exception = assertThrows(EntityNotFoundException.class,
                 () -> taskService.setTaskStatus(1L, dto));

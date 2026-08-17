@@ -1,8 +1,8 @@
 package com.example.tasktracker.controller;
 
-import com.example.tasktracker.dto.TaskDto;
-import com.example.tasktracker.dto.UpdateTaskDto;
-import com.example.tasktracker.dto.UpdateTaskStatusDto;
+import com.example.tasktracker.dto.TaskResponse;
+import com.example.tasktracker.dto.UpdateTaskRequest;
+import com.example.tasktracker.dto.UpdateTaskStatusRequest;
 import com.example.tasktracker.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,19 +17,19 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping("/{id}")
-    public TaskDto getTaskById(@PathVariable Long id) {
+    public TaskResponse getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
 
     @PutMapping("/{id}")
-    public TaskDto updateTaskInfo(@PathVariable Long id,
-                                  @RequestBody @Valid UpdateTaskDto dto) {
+    public TaskResponse updateTaskInfo(@PathVariable Long id,
+                                       @RequestBody @Valid UpdateTaskRequest dto) {
         return taskService.updateTaskInfo(id, dto);
     }
 
     @PatchMapping("/{id}/status")
-    public TaskDto setTaskStatus(@PathVariable Long id,
-                                 @RequestBody @Valid UpdateTaskStatusDto dto) {
+    public TaskResponse setTaskStatus(@PathVariable Long id,
+                                      @RequestBody @Valid UpdateTaskStatusRequest dto) {
         return taskService.setTaskStatus(id, dto);
     }
 

@@ -1,40 +1,38 @@
 package com.example.tasktracker.mapper;
 
-import com.example.tasktracker.dto.CreateTaskDto;
-import com.example.tasktracker.dto.TaskDto;
+import com.example.tasktracker.dto.CreateTaskRequest;
+import com.example.tasktracker.dto.TaskResponse;
 import com.example.tasktracker.entity.Task;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TaskMapper {
 
-    public TaskDto toDto(Task task) {
+    public TaskResponse toDto(Task task) {
         if (task == null) {
             return null;
         }
 
-        TaskDto dto = new TaskDto();
-
-        dto.setId(task.getId());
-        dto.setTitle(task.getTitle());
-        dto.setDescription(task.getDescription());
-        dto.setStatus(task.getStatus());
-        dto.setPriority(task.getPriority());
-
-        return dto;
+        return new TaskResponse(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getPriority()
+        );
     }
 
-    public Task toEntity(CreateTaskDto dto) {
+    public Task toEntity(CreateTaskRequest dto) {
         if (dto == null) {
             return null;
         }
 
         Task task = new Task();
 
-        task.setTitle(dto.getTitle());
-        task.setDescription(dto.getDescription());
-        task.setStatus(dto.getStatus());
-        task.setPriority(dto.getPriority());
+        task.setTitle(dto.title());
+        task.setDescription(dto.description());
+        task.setStatus(dto.status());
+        task.setPriority(dto.priority());
 
         return task;
     }

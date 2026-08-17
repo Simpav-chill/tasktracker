@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @Testcontainers
-public class TaskControllerIntegrationTest {
+public class TaskControllerIT {
 
     @Container
     @ServiceConnection

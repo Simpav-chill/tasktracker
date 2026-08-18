@@ -1,5 +1,7 @@
-package com.example.tasktracker.exception;
+package com.example.tasktracker.web.exception;
 
+import com.example.tasktracker.exception.EntityAlreadyExistsException;
+import com.example.tasktracker.exception.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

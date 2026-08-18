@@ -1,4 +1,4 @@
-package com.example.tasktracker.controller;
+package com.example.tasktracker.web.controller;
 
 import com.example.tasktracker.dto.*;
 import com.example.tasktracker.service.ProjectService;

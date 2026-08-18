@@ -1,4 +1,4 @@
-package com.example.tasktracker.controller;
+package com.example.tasktracker.web.controller;
 
 import com.example.tasktracker.dto.TaskResponse;
 import com.example.tasktracker.dto.UpdateTaskRequest;

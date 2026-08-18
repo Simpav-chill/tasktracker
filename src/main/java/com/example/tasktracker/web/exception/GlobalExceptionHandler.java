@@ -2,47 +2,37 @@ package com.example.tasktracker.web.exception;
 
 import com.example.tasktracker.exception.EntityAlreadyExistsException;
 import com.example.tasktracker.exception.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleNotFound(EntityNotFoundException ex,
-                                                   HttpServletRequest request) {
-        String path = request.getRequestURI();
-
-        var body = Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", 404,
-                "error", "Not Found",
-                "message", ex.getMessage(),
-                "path", path
+    public ProblemDetail handleNotFound(EntityNotFoundException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage()
         );
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        problem.setProperty("timestamp", LocalDateTime.now());
+
+        return problem;
     }
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
-    public ResponseEntity<Object> handleAlreadyExists(EntityAlreadyExistsException ex,
-                                                      HttpServletRequest request) {
-        String path = request.getRequestURI();
-
-        var body = Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", 409,
-                "error", "Conflict",
-                "message", ex.getMessage(),
-                "path", path
+    public ProblemDetail handleAlreadyExists(EntityAlreadyExistsException ex) {
+       ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.CONFLICT,
+                ex.getMessage()
         );
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+        problem.setProperty("timestamp", LocalDateTime.now());
+
+        return problem;
     }
 }

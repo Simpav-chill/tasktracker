@@ -40,10 +40,7 @@ public class Task {
     public Task() {}
 
     public Task(String title, String description, TaskStatus status, TaskPriority priority) {
-        this.title = title;
-        this.description = description;
-        this.status = status;
-        this.priority = priority;
+        this(title, description, status, priority, null);
     }
 
     public Task(String title, String description, TaskStatus status, TaskPriority priority, Project project) {

@@ -39,9 +39,7 @@ public class Project {
     public Project() {}
 
     public Project(String title, String description, ProjectStatus status) {
-        this.title = title;
-        this.description = description;
-        this.status = status;
+        this(title,description, status, null);
     }
 
     public Project(String title, String description, ProjectStatus status, List<Task> tasks) {

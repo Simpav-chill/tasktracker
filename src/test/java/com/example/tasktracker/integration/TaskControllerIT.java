@@ -104,7 +104,7 @@ public class TaskControllerIT {
                 }
                 """;
 
-        mockMvc.perform(put("/api/tasks/{id}", task.getId())
+        mockMvc.perform(patch("/api/tasks/{id}", task.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isOk())
@@ -125,7 +125,7 @@ public class TaskControllerIT {
                 }
                 """;
 
-        mockMvc.perform(put("/api/tasks/1")
+        mockMvc.perform(patch("/api/tasks/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isNotFound());

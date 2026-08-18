@@ -21,7 +21,7 @@ public class TaskController {
         return taskService.getTaskById(id);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public TaskResponse updateTaskInfo(@PathVariable Long id,
                                        @RequestBody @Valid UpdateTaskRequest dto) {
         return taskService.updateTaskInfo(id, dto);

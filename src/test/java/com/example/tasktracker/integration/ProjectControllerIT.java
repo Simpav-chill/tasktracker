@@ -158,7 +158,7 @@ public class ProjectControllerIT {
                 }
                 """;
 
-        mockMvc.perform(put("/api/projects/{id}", project.getId())
+        mockMvc.perform(patch("/api/projects/{id}", project.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isOk())
@@ -177,7 +177,7 @@ public class ProjectControllerIT {
                 }
                 """;
 
-        mockMvc.perform(put("/api/projects/1")
+        mockMvc.perform(patch("/api/projects/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isNotFound());

@@ -32,7 +32,7 @@ public class ProjectController {
         return projectService.getProjectById(id);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ProjectResponse updateProjectInfo(@PathVariable Long id,
                                              @RequestBody @Valid UpdateProjectRequest updateDto) {
         return projectService.updateProjectInfo(id, updateDto);

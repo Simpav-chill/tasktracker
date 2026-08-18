@@ -19,12 +19,12 @@ public class TaskService {
 
     public TaskResponse getTaskById(Long id) {
         return taskMapper.toDto(taskRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found")));
+                .orElseThrow(() -> EntityNotFoundException.forTaskId(id)));
     }
 
     public TaskResponse updateTaskInfo(Long id, UpdateTaskRequest dto) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found"));
+                .orElseThrow(() -> EntityNotFoundException.forTaskId(id));
 
         task.setTitle(dto.title());
         task.setDescription(dto.description());
@@ -37,7 +37,7 @@ public class TaskService {
 
     public TaskResponse setTaskStatus(Long id, UpdateTaskStatusRequest dto) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Task " + id + " not found"));
+                .orElseThrow(() -> EntityNotFoundException.forTaskId(id));
 
         task.setStatus(dto.status());
 
@@ -48,7 +48,7 @@ public class TaskService {
 
     public void deleteTaskById(Long id) {
         if (!taskRepository.existsById(id)) {
-            throw new EntityNotFoundException("Task " + id + " not found");
+            throw EntityNotFoundException.forTaskId(id);
         }
 
         taskRepository.deleteById(id);

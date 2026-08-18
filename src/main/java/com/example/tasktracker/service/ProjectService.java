@@ -44,12 +44,12 @@ public class ProjectService {
 
     public ProjectResponse getProjectById(Long id) {
         return projectMapper.toDto(projectRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Project with id " + id + " not found")));
+                .orElseThrow(() -> EntityNotFoundException.forProjectId(id)));
     }
 
     public ProjectResponse updateProjectInfo(Long id, UpdateProjectRequest updateDto) {
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Project with id " + id + " not found"));
+                .orElseThrow(() -> EntityNotFoundException.forProjectId(id));
 
         project.setTitle(updateDto.title());
         project.setDescription(updateDto.description());
@@ -61,7 +61,7 @@ public class ProjectService {
 
     public void deleteProjectById(Long id) {
         if (!projectRepository.existsById(id)) {
-            throw new EntityNotFoundException("Project with id " + id + " not found");
+            throw EntityNotFoundException.forProjectId(id);
         }
 
         projectRepository.deleteById(id);
@@ -69,7 +69,7 @@ public class ProjectService {
 
     public ProjectResponse archiveProjectById(Long id) {
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Project with id " + id + " not found"));
+                .orElseThrow(() -> EntityNotFoundException.forProjectId(id));
 
         project.setStatus(ProjectStatus.ARCHIVE);
 
@@ -81,7 +81,7 @@ public class ProjectService {
     @Transactional
     public TaskResponse createTask(Long projectId, CreateTaskRequest dto) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new EntityNotFoundException("Project with id " + projectId + " not found"));
+                .orElseThrow(() -> EntityNotFoundException.forProjectId(projectId));
 
         Task task = taskMapper.toEntity(dto);
 

@@ -78,7 +78,7 @@ class TaskServiceUnitTest {
         Exception exception = assertThrows(EntityNotFoundException.class,
                 () -> taskService.getTaskById(1L));
 
-        assertEquals("Task 1 not found", exception.getMessage());
+        assertEquals("Task with id 1 not found", exception.getMessage());
     }
 
     @Test
@@ -143,7 +143,7 @@ class TaskServiceUnitTest {
         Exception exception = assertThrows(EntityNotFoundException.class,
                 () -> taskService.updateTaskInfo(1L, updateDto));
 
-        assertEquals("Task 1 not found", exception.getMessage());
+        assertEquals("Task with id 1 not found", exception.getMessage());
     }
 
     @Test
@@ -198,7 +198,7 @@ class TaskServiceUnitTest {
         Exception exception = assertThrows(EntityNotFoundException.class,
                 () -> taskService.setTaskStatus(1L, dto));
 
-        assertEquals("Task 1 not found", exception.getMessage());
+        assertEquals("Task with id 1 not found", exception.getMessage());
     }
 
     @Test
@@ -218,6 +218,6 @@ class TaskServiceUnitTest {
         Exception exception = assertThrows(EntityNotFoundException.class,
                 () -> taskService.deleteTaskById(1L));
 
-        assertEquals("Task 1 not found", exception.getMessage());
+        assertEquals("Task with id 1 not found", exception.getMessage());
     }
 }
